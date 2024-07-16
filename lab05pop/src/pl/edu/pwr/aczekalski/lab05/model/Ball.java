@@ -2,24 +2,24 @@ package pl.edu.pwr.aczekalski.lab05.model;
 
 import pl.edu.pwr.aczekalski.lab05.logic.BallLogic;
 
-public class Ball extends Thread{
-    int id; //id piłki (wartość od 0)
-    int startPositionX; //pozycja startowa piłki
-    public int positionX; //pozycja X piłki (wartość od 0)
-    public int positionY; //pozycja Y piłki (wartość od 0)
-    BallLogic ballLogic; //logika piłki
-    public boolean direction; //kierunek false - prawo, true - lewo
-    public boolean ended = false;
+public class Ball extends Thread {
+    int id; //ball's id (value from 0)
+    int startPositionX; //ball's starting position X
+    public int positionX; //ball's X position (value from 0)
+    public int positionY; //ball's Y position (value from 0)
+    BallLogic ballLogic; //ball's logic
+    public boolean direction; //turning direction: false - right, true - left
+    public boolean ended;
 
-    public Ball(int id, boolean direction, int startPosition, int positionX, int positionY, BallLogic ballLogic){
-        this.id=id;
-        this.startPositionX =startPosition;
-        this.positionX=positionX;
-        this.positionY=positionY;
-        this.ballLogic=ballLogic;
-        this.direction=direction;
+    public Ball(int id, boolean direction, int startPosition, int positionX, int positionY, BallLogic ballLogic) {
+        this.id = id;
+        this.startPositionX = startPosition;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.ballLogic = ballLogic;
+        this.direction = direction;
+        this.ended = false;
     }
-
 
 
     @Override

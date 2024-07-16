@@ -27,30 +27,29 @@ public class ChooseParameters extends JDialog {
     private JTextArea jTextAreaColumns, jTextAreaRow, jTextAreaPlayers, jTextAreaBalls;
     private JLabel labelColumns, labelRow, labelPlayers, labelBalls;
 
-    public ChooseParameters(){
-        setBounds(0, 0, 500, 500); //wielkość dialogu
+    public ChooseParameters() {
+        setBounds(0, 0, 500, 500); //dialog size
 
-        contentPane = new JPanel(); //panel na content
-        contentPane.setBounds(20,10,70,150);
+        contentPane = new JPanel(); //panel for content
+        contentPane.setBounds(20, 10, 70, 150);
 
         labelRow = new JLabel("number of rows=");
-        labelRow.setBounds(20,10,100,10);
+        labelRow.setBounds(20, 10, 100, 10);
 
-        jTextAreaRow=new JTextArea("10"); //pod napisem pole tekstowe do wprowadzenia parametru
-        jTextAreaRow.setBounds(20,25,70,20);
+        jTextAreaRow = new JTextArea("10"); //under caption - textarea to pass parameter
+        jTextAreaRow.setBounds(20, 25, 70, 20);
 
-        contentPane.setLayout(null); //żeby można było dobrowolnie ustawić miejsce pojawienia się tekstów/pól itd...
-        contentPane.add(jTextAreaRow); //dodanie do panelu
+        contentPane.setLayout(null); //in order to freely choose place of appearance of text/field
+        contentPane.add(jTextAreaRow); //add panel
         contentPane.add(labelRow);
 
         ///////////////////////////////////////////////////
 
+        labelColumns = new JLabel("number of columns="); //other parameters
+        labelColumns.setBounds(20, 70, 140, 10);
 
-        labelColumns = new JLabel("number of columns="); //analogicznie z innymi parametrami
-        labelColumns.setBounds(20,70,140,10);
-
-        jTextAreaColumns=new JTextArea("9");
-        jTextAreaColumns.setBounds(20,85,70,20);
+        jTextAreaColumns = new JTextArea("9");
+        jTextAreaColumns.setBounds(20, 85, 70, 20);
 
         contentPane.add(jTextAreaColumns);
         contentPane.add(labelColumns);
@@ -58,51 +57,51 @@ public class ChooseParameters extends JDialog {
         //////////////////////////////////////////////////
 
         labelPlayers = new JLabel("number of players=");
-        labelPlayers.setBounds(20,130,140,15);
+        labelPlayers.setBounds(20, 130, 140, 15);
 
-        jTextAreaPlayers=new JTextArea("2");
-        jTextAreaPlayers.setBounds(20,145,70,20);
+        jTextAreaPlayers = new JTextArea("2");
+        jTextAreaPlayers.setBounds(20, 145, 70, 20);
 
         contentPane.add(jTextAreaPlayers);
         contentPane.add(labelPlayers);
 
-//        /////////////////////////////////////////////////
-//
-        labelBalls = new JLabel("number of balls=");
-        labelBalls.setBounds(20,190,140,10);
+        /////////////////////////////////////////////////
 
-        jTextAreaBalls=new JTextArea("3");
-        jTextAreaBalls.setBounds(20,205,70,20);
+        labelBalls = new JLabel("number of balls=");
+        labelBalls.setBounds(20, 190, 140, 10);
+
+        jTextAreaBalls = new JTextArea("3");
+        jTextAreaBalls.setBounds(20, 205, 70, 20);
 
         contentPane.add(jTextAreaBalls);
         contentPane.add(labelBalls);
-//
-//
-//        /////////////////////////////////////////////////
-//
 
-        JButton jButton = new JButton("Apply"); //przycisk
-        jButton.setBounds(20,300,70,20);
-        jButton.addActionListener(new ActionListener() { //dodanie warunków żeby dopiero po kliknięciu przycisku
+
+        /////////////////////////////////////////////////
+
+        JButton jButton = new JButton("Apply"); //button
+        jButton.setBounds(20, 300, 70, 20);
+        jButton.addActionListener(new ActionListener() { //add conditions for starting game
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(isNumber(jTextAreaRow) && isNumber(jTextAreaColumns) && isNumber(jTextAreaPlayers) && isNumber(jTextAreaBalls)) { //sprawdzenie czy w polach są wpisane liczby
-                    numberOfRows=Integer.parseInt(jTextAreaRow.getText());
-                    numberOfColumns=Integer.parseInt(jTextAreaColumns.getText());
+                if (isNumber(jTextAreaRow) && isNumber(jTextAreaColumns) && isNumber(jTextAreaPlayers) && isNumber(jTextAreaBalls)) { //check if there are numbers in fields
+                    numberOfRows = Integer.parseInt(jTextAreaRow.getText());
+                    numberOfColumns = Integer.parseInt(jTextAreaColumns.getText());
                     numberOfPlayers = Integer.parseInt(jTextAreaPlayers.getText());
                     numberOfBalls = Integer.parseInt(jTextAreaBalls.getText());
 
-                    if(numberOfColumns %2==1 && numberOfPlayers>=2 && numberOfBalls>=3 && numberOfBalls<=numberOfRows){
-                        dispose(); //zniknięcie dialogu
+                    if (numberOfColumns % 2 == 1 && numberOfPlayers >= 2 && numberOfBalls >= 3 && numberOfBalls <= numberOfRows) {
+                        dispose(); //close dialog
                         System.out.println("Simulation began");
                     }
 
-                    if(numberOfColumns%2==0) System.out.println("Uwaga: wybrano parzystą liczbę kolumn, wybierz inną wartość");
-                    if(numberOfPlayers<2) System.out.println("Uwaga: za mała liczba graczy, wybierz inną wartość");
-                    if(numberOfBalls<3 && numberOfBalls>numberOfRows) System.out.println("Uwaga: zła liczba piłek, wybierz inną wartość"); //żeby d i h nie były poza ramieniem l2
-                }
-                else System.out.println("Niepoprawne wartości");
+                    if (numberOfColumns % 2 == 0)
+                        System.out.println("Warning: Number of columns should be the odd number");
+                    if (numberOfPlayers < 2) System.out.println("Warning: There must be at least 2 players");
+                    if (numberOfBalls < 3 && numberOfBalls > numberOfRows)
+                        System.out.println("Warning: There must be at least 3 balls and there can't be more balls than rows");
+                } else System.out.println("Incorrect values");
             }
         });
 
@@ -110,15 +109,14 @@ public class ChooseParameters extends JDialog {
 
         setContentPane(contentPane);
         setAlwaysOnTop(true);
-        setLocationRelativeTo(null); //ustawienie ramki na środek ekranu
+        setLocationRelativeTo(null); //set frame in the middle of the screen
 
     }
 
-    public static boolean isNumber(JTextArea input){ //metoda do sprawdzania czy w polu tekstowym użytkownik wprowadził liczbę
-        try{
+    public static boolean isNumber(JTextArea input) { //method checking if there's a number in text field
+        try {
             Integer.parseInt(input.getText());
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
