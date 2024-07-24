@@ -16,7 +16,7 @@ public class MainFrame {
             @Override
             public void run() {
                 UserInterface userInterface = new UserInterface();
-                if (!userInterface.chooseParameters.isVisible()) { //if JDialog disappears, animation begins
+                if (!userInterface.getChooseParameters().isVisible()) { //if JDialog disappears, animation begins
                     userInterface.startT();
                 }
             }

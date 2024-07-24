@@ -1,11 +1,12 @@
-package pl.edu.pwr.aczekalski.lab05.model;
+package pl.edu.pwr.aczekalski.lab05.model.player;
 
-import pl.edu.pwr.aczekalski.lab05.logic.PlayerLogic;
+import pl.edu.pwr.aczekalski.lab05.model.field.Field;
+
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MakePlayers {
-    ArrayList<ArrayList<Field>> fieldLabelsArray; //field arraylist from main method
+    private ArrayList<ArrayList<Field>> fieldLabelsArray; //field arraylist from main method
 
     public MakePlayers(ArrayList<ArrayList<Field>> fieldLabelsArray) {
         this.fieldLabelsArray = fieldLabelsArray;

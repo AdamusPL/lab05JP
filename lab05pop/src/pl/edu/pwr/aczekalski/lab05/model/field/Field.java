@@ -1,11 +1,23 @@
-package pl.edu.pwr.aczekalski.lab05.model;
+package pl.edu.pwr.aczekalski.lab05.model.field;
 
 import javax.swing.*;
 
 public class Field {
-    public int x;
-    public int y;
-    public JLabel label;
+    private int x;
+    private int y;
+    private JLabel label;
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public JLabel getLabel() {
+        return label;
+    }
 
     public Field(int x, int y, boolean isOccupied) {
         this.x = x;

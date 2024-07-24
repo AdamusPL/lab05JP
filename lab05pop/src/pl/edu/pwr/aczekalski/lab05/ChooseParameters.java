@@ -3,6 +3,8 @@ package pl.edu.pwr.aczekalski.lab05;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChooseParameters extends JDialog {
     private int numberOfPlayers, numberOfBalls, numberOfColumns, numberOfRows;
@@ -24,60 +26,27 @@ public class ChooseParameters extends JDialog {
     }
 
     private JPanel contentPane;
-    private JTextArea jTextAreaColumns, jTextAreaRow, jTextAreaPlayers, jTextAreaBalls;
-    private JLabel labelColumns, labelRow, labelPlayers, labelBalls;
+    List<JTextArea> jTextAreaList;
 
     public ChooseParameters() {
+        jTextAreaList = new ArrayList<>();
         setBounds(0, 0, 500, 500); //dialog size
 
         contentPane = new JPanel(); //panel for content
         contentPane.setBounds(20, 10, 70, 150);
-
-        labelRow = new JLabel("number of rows=");
-        labelRow.setBounds(20, 10, 100, 10);
-
-        jTextAreaRow = new JTextArea("10"); //under caption - textarea to pass parameter
-        jTextAreaRow.setBounds(20, 25, 70, 20);
-
         contentPane.setLayout(null); //in order to freely choose place of appearance of text/field
-        contentPane.add(jTextAreaRow); //add panel
-        contentPane.add(labelRow);
 
-        ///////////////////////////////////////////////////
+        setupLabel("number of rows=", 20, 10, 100, 10, "10",
+                20, 25, 70, 20);
 
-        labelColumns = new JLabel("number of columns="); //other parameters
-        labelColumns.setBounds(20, 70, 140, 10);
+        setupLabel("number of columns=", 20, 70, 140, 10, "9",
+                20, 85, 70, 20);
 
-        jTextAreaColumns = new JTextArea("9");
-        jTextAreaColumns.setBounds(20, 85, 70, 20);
+        setupLabel("number of players=", 20, 130, 140, 15, "2",
+                20, 145, 70, 20);
 
-        contentPane.add(jTextAreaColumns);
-        contentPane.add(labelColumns);
-
-        //////////////////////////////////////////////////
-
-        labelPlayers = new JLabel("number of players=");
-        labelPlayers.setBounds(20, 130, 140, 15);
-
-        jTextAreaPlayers = new JTextArea("2");
-        jTextAreaPlayers.setBounds(20, 145, 70, 20);
-
-        contentPane.add(jTextAreaPlayers);
-        contentPane.add(labelPlayers);
-
-        /////////////////////////////////////////////////
-
-        labelBalls = new JLabel("number of balls=");
-        labelBalls.setBounds(20, 190, 140, 10);
-
-        jTextAreaBalls = new JTextArea("3");
-        jTextAreaBalls.setBounds(20, 205, 70, 20);
-
-        contentPane.add(jTextAreaBalls);
-        contentPane.add(labelBalls);
-
-
-        /////////////////////////////////////////////////
+        setupLabel("number of balls=", 20, 190, 140, 10, "3",
+                20, 205, 70, 20);
 
         JButton jButton = new JButton("Apply"); //button
         jButton.setBounds(20, 300, 70, 20);
@@ -85,11 +54,11 @@ public class ChooseParameters extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (isNumber(jTextAreaRow) && isNumber(jTextAreaColumns) && isNumber(jTextAreaPlayers) && isNumber(jTextAreaBalls)) { //check if there are numbers in fields
-                    numberOfRows = Integer.parseInt(jTextAreaRow.getText());
-                    numberOfColumns = Integer.parseInt(jTextAreaColumns.getText());
-                    numberOfPlayers = Integer.parseInt(jTextAreaPlayers.getText());
-                    numberOfBalls = Integer.parseInt(jTextAreaBalls.getText());
+                if (isNumber(jTextAreaList.get(0)) && isNumber(jTextAreaList.get(1)) && isNumber(jTextAreaList.get(2)) && isNumber(jTextAreaList.get(3))) { //check if there are numbers in fields
+                    numberOfRows = Integer.parseInt(jTextAreaList.get(0).getText());
+                    numberOfColumns = Integer.parseInt(jTextAreaList.get(1).getText());
+                    numberOfPlayers = Integer.parseInt(jTextAreaList.get(2).getText());
+                    numberOfBalls = Integer.parseInt(jTextAreaList.get(3).getText());
 
                     if (numberOfColumns % 2 == 1 && numberOfPlayers >= 2 && numberOfBalls >= 3 && numberOfBalls <= numberOfRows) {
                         dispose(); //close dialog
@@ -113,7 +82,20 @@ public class ChooseParameters extends JDialog {
 
     }
 
-    public static boolean isNumber(JTextArea input) { //method checking if there's a number in text field
+    private void setupLabel(String text, int xLabel, int yLabel, int widthLabel, int heightLabel, String defaultValue,
+                            int xTextArea, int yTextArea, int widthTextArea, int heightTextArea) {
+        JLabel label = new JLabel(text);
+        label.setBounds(xLabel, yLabel, widthLabel, heightLabel);
+
+        JTextArea jTextArea = new JTextArea(defaultValue); //under caption - textarea to pass parameter
+        jTextArea.setBounds(xTextArea, yTextArea, widthTextArea, heightTextArea);
+
+        contentPane.add(jTextArea); //add panel
+        contentPane.add(label);
+        jTextAreaList.add(jTextArea);
+    }
+
+    private static boolean isNumber(JTextArea input) { //method checking if there's a number in text field
         try {
             Integer.parseInt(input.getText());
         } catch (Exception e) {

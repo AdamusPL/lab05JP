@@ -1,6 +1,11 @@
 package pl.edu.pwr.aczekalski.lab05;
 
-import pl.edu.pwr.aczekalski.lab05.model.*;
+import pl.edu.pwr.aczekalski.lab05.model.ball.Ball;
+import pl.edu.pwr.aczekalski.lab05.model.ball.BallGenerator;
+import pl.edu.pwr.aczekalski.lab05.model.field.Field;
+import pl.edu.pwr.aczekalski.lab05.model.field.Score;
+import pl.edu.pwr.aczekalski.lab05.model.player.MakePlayers;
+import pl.edu.pwr.aczekalski.lab05.model.player.Player;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -8,19 +13,23 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class UserInterface extends JFrame {
-    ChooseParameters chooseParameters;
+    private ChooseParameters chooseParameters;
     private JPanel contentPane;
-    JPanel simPanel;
+    private JPanel simPanel;
 
-    ArrayList<Ball> balls; //ball arraylist
-    ArrayList<Player> playersTeam1; //team 1 players arraylist
-    ArrayList<Player> playersTeam2; //team 2 players arraylist
-    MakePlayers makePlayers;
-    BallGenerator ballGenerator;
-    ArrayList<ArrayList<Field>> fieldLabelsArray; //field arraylist
-    ArrayList<ArrayList<Score>> scoreLabelsArray; //score arraylist
+    public ChooseParameters getChooseParameters() {
+        return chooseParameters;
+    }
 
-    int numberOfPlayers, numberOfBalls, numberOfColumns, numberOfRows;
+    private ArrayList<Ball> balls; //ball arraylist
+    private ArrayList<Player> playersTeam1; //team 1 players arraylist
+    private ArrayList<Player> playersTeam2; //team 2 players arraylist
+    private MakePlayers makePlayers;
+    private BallGenerator ballGenerator;
+    private ArrayList<ArrayList<Field>> fieldLabelsArray; //field arraylist
+    private ArrayList<ArrayList<Score>> scoreLabelsArray; //score arraylist
+
+    private int numberOfPlayers, numberOfBalls, numberOfColumns, numberOfRows;
 
     public UserInterface() {
         runChoosingParameterWindow();
@@ -47,7 +56,7 @@ public class UserInterface extends JFrame {
         setContentPane(contentPane);
     }
 
-    public void setupField(){
+    private void setupField(){
         this.fieldLabelsArray = new ArrayList<>();
         this.scoreLabelsArray = new ArrayList<>();
 
@@ -77,14 +86,14 @@ public class UserInterface extends JFrame {
 
         for (ArrayList<Field> rowArray : fieldLabelsArray) {
             for (Field f : rowArray) {
-                JLabel label = f.label;
-                label.setBounds(f.x, f.y, 10, 10);
+                JLabel label = f.getLabel();
+                label.setBounds(f.getX(), f.getY(), 10, 10);
                 simPanel.add(label);
             }
         }
     }
 
-    void setupObjects(){
+    private void setupObjects(){
         makePlayers = new MakePlayers(fieldLabelsArray);
 
         balls = new ArrayList<>();
@@ -94,7 +103,7 @@ public class UserInterface extends JFrame {
         playersTeam2 = makePlayers.putPlayers(numberOfPlayers, numberOfRows, numberOfColumns - 1);
     }
 
-    public ArrayList<Score> makeRowScore(int x, int y, int numberOfColumns) {
+    private ArrayList<Score> makeRowScore(int x, int y, int numberOfColumns) {
         ArrayList<Score> rowScore = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
             Score score = new Score(x, y);
@@ -104,7 +113,7 @@ public class UserInterface extends JFrame {
         return rowScore;
     }
 
-    public ArrayList<Field> makeRowField(int x, int y, int numberOfColumns) {
+    private ArrayList<Field> makeRowField(int x, int y, int numberOfColumns) {
         ArrayList<Field> rowField = new ArrayList<>();
         for (int i = 0; i < numberOfColumns; i++) {
             x += 15;
@@ -115,7 +124,7 @@ public class UserInterface extends JFrame {
         return rowField;
     }
 
-    Thread t = new Thread(new Runnable() {
+    private Thread t = new Thread(new Runnable() {
         @Override
         public void run() {
             while (true) {
@@ -133,7 +142,7 @@ public class UserInterface extends JFrame {
         t.start();
     }
 
-    public void runChoosingParameterWindow(){
+    private void runChoosingParameterWindow(){
         chooseParameters = new ChooseParameters();
         chooseParameters.setModal(true); //in order that animation won't start before disappearing JDialog
         chooseParameters.setVisible(true);

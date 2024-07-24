@@ -1,18 +1,23 @@
-package pl.edu.pwr.aczekalski.lab05.model;
+package pl.edu.pwr.aczekalski.lab05.model.ball;
 
-import pl.edu.pwr.aczekalski.lab05.logic.BallLogic;
+import pl.edu.pwr.aczekalski.lab05.model.field.Field;
+import pl.edu.pwr.aczekalski.lab05.model.field.Score;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class BallGenerator extends Thread {
 
-    ArrayList<ArrayList<Field>> fieldLabelsArray;
-    ArrayList<ArrayList<Score>> scoreLabelsArray;
-    ArrayList<Ball> balls;
-    public ArrayList<Integer> picked; //arraylist which stores all values previously random-generated in order not to repeat them
+    private ArrayList<ArrayList<Field>> fieldLabelsArray;
+    private ArrayList<ArrayList<Score>> scoreLabelsArray;
+    private ArrayList<Ball> balls;
+    private ArrayList<Integer> picked; //arraylist which stores all values previously random-generated in order not to repeat them
 
-    int numberOfBalls;
+    public ArrayList<Integer> getPicked() {
+        return picked;
+    }
+
+    private int numberOfBalls;
 
     public BallGenerator(ArrayList<ArrayList<Field>> fieldLabelsArray, ArrayList<ArrayList<Score>> scoreLabelsArray, ArrayList<Ball> balls, int numberOfBalls) {
         this.fieldLabelsArray = fieldLabelsArray;
@@ -21,7 +26,7 @@ public class BallGenerator extends Thread {
         this.numberOfBalls = numberOfBalls;
     }
 
-    public boolean randomDirection() { //random turning direction for ball
+    private boolean randomDirection() { //random turning direction for ball
         boolean direction = false;
         if (Math.random() > 0.5) {
             direction = true;
@@ -29,7 +34,7 @@ public class BallGenerator extends Thread {
         return direction;
     }
 
-    public void putBalls(int numberOfColumns, int numberOfRows) {
+    private void putBalls(int numberOfColumns, int numberOfRows) {
         picked = new ArrayList<>();
         for (int i = 0; i < numberOfBalls; i++) {
             BallLogic ballLogic = new BallLogic(fieldLabelsArray, scoreLabelsArray, this);
@@ -45,7 +50,7 @@ public class BallGenerator extends Thread {
         }
     }
 
-    synchronized void putBall(int numberOfColumns, int numberOfRows) {
+    private synchronized void putBall(int numberOfColumns, int numberOfRows) {
         int middle = numberOfColumns / 2; //middle column
         for (Ball ball : balls) {
             if (ball.ended) {

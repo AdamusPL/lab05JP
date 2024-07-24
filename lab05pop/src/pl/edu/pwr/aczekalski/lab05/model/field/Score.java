@@ -1,4 +1,4 @@
-package pl.edu.pwr.aczekalski.lab05.model;
+package pl.edu.pwr.aczekalski.lab05.model.field;
 
 import javax.swing.*;
 

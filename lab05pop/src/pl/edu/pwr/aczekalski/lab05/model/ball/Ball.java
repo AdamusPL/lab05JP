@@ -1,6 +1,4 @@
-package pl.edu.pwr.aczekalski.lab05.model;
-
-import pl.edu.pwr.aczekalski.lab05.logic.BallLogic;
+package pl.edu.pwr.aczekalski.lab05.model.ball;
 
 public class Ball extends Thread {
     int id; //ball's id (value from 0)
